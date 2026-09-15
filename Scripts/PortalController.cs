@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PortalController : MonoBehaviour {
-    [SerializeField] private string Fase2;
+    [SerializeField] private string proximaFase;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -14,10 +14,11 @@ public class PortalController : MonoBehaviour {
         
     }
 
-    private void OnTriggerEnter2D(BoxCollider2D other) {
-        if (other.CompareTag("Player")) {
-            int proximaCena = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneManager.LoadScene(Fase2);
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            SceneManager.LoadScene(proximaFase);
         }
     }
 }

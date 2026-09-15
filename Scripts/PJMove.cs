@@ -5,6 +5,7 @@ public class PJMove : MonoBehaviour {
     public Rigidbody2D rb;
     Vector2 forçaPulo;
     bool podePular = true;
+    private int quantidadePulos = 2;
     public int quantidadeItens = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,15 +17,24 @@ public class PJMove : MonoBehaviour {
     void Update() {
         float mX = Input.GetAxisRaw("Horizontal");
         rb.linearVelocityX = mX * velocidade;
-        if (Input.GetKeyDown(KeyCode.Space) && podePular) {
-            podePular = false;
+        if (Input.GetKeyDown(KeyCode.Space) && podePular && quantidadePulos > 0) {
+            quantidadePulos--;
             rb.AddForce(forçaPulo, ForceMode2D.Impulse);
+            if (quantidadePulos < 2)
+            {
+                forçaPulo.y = 5.0f;
+                if (quantidadePulos == 0)
+                {
+                    podePular = false;
+                }
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Ground")) {
             podePular = true;
+            quantidadePulos = 2;
         }
     }
 
